@@ -28,11 +28,11 @@ export default function Matching() {
 
   useEffect(() => {
     const generateMockUsers = (count: number): UserCard[] => {
-      const names = ["张", "李", "王", "刘", "陈", "杨", "赵", "黄", "周", "吴"];
-      const surnames = ["明", "华", "芳", "强", "伟", "秀英", "娜", "磊", "静", "军"];
-      const jobs = ["设计师", "工程师", "教师", "医生", "律师", "会计师", "作家", "摄影师", "厨师", "自由职业"];
-      const locations = ["北京", "上海", "广州", "深圳", "杭州", "成都", "武汉", "南京", "西安", "重庆"];
-      const interests = ["登山", "钢琴", "烘焙", "摄影", "阅读", "旅行", "健身", "绘画", "编程", "电影"];
+      const names = ["王", "张", "陈", "闫", "王", "李", "张", "姜", "谢", "邵"];
+      const surnames = ["hb", "yx", "zq", "jc", "xc", "yc", "ht", "yc", "jb", "yh"];
+      const jobs = ["ncut_stu", "ncut_stu", "ncut_stu", "ncut_stu", "ncut_stu", "ncut_stu", "ncut_stu", "ncut_stu", "ncut_stu", "ncut_stu"];
+      const locations = ["湖建", "百京业", "福南", "山东", "河北", "北京", "北京", "北京", "天津", "鹤壁"];
+      const interests = ["原神", "起飞", "薛之谦", "周杰伦", "ow", "王者农药", "脑叶公司", "三角洲", "火影", "舞萌"];
       
       return Array.from({ length: count }, (_, i) => ({
         id: (i + 1).toString(),
