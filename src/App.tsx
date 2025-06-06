@@ -46,7 +46,6 @@ export default function App() {
   return (
     // AuthContext.Provider 用于将其 value 属性中提供的值（认证状态和相关函数）
     // 传递给其所有子组件，使得子组件可以通过 useContext Hook 来访问这些值。
-    <>
     <AuthContext.Provider
       value={{ isAuthenticated, setIsAuthenticated, logout }}
     >
@@ -67,21 +66,5 @@ export default function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
     </AuthContext.Provider>
-    <footer style={{
-      width: '100%',
-      textAlign: 'center',
-      padding: '10px 0',
-      position: 'fixed',
-      bottom: 0,
-      left: 0,
-      backgroundColor: '#f0f0f0', // 一个浅灰色背景，方便查看
-      zIndex: 99,
-      fontSize: '0.9em'
-    }}>
-      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
-        鲁ICP备145004号-1
-      </a>
-    </footer>
-    </>
   );
 }
