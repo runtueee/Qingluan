@@ -25,7 +25,7 @@ export default function Register() {
 
     try {
       // Send registration data to the backend API
-      const response = await fetch('http://localhost:3001/api/register', { // Use your backend URL
+      const response = await fetch('/api/auth/register', { // Use the Vercel /api/auth proxy
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -18,7 +18,7 @@ export default function Login() {
 
     try {
       // Send login data to the backend API
-      const response = await fetch('http://localhost:3001/api/login', { // Use your backend URL
+      const response = await fetch('/api/auth/login', { // Use the Vercel /api/auth proxy
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
