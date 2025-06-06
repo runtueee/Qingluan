@@ -46,7 +46,7 @@ export default function Advisor() {
     setIsLoadingAI(true);
 
     try {
-      const response = await fetch('http://121.199.34.78:3001/api/coze-chat', {
+      const response = await fetch('/api/coze-chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
