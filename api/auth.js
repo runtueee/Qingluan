@@ -1,48 +1,38 @@
 // This Vercel Serverless Function acts as a proxy for authentication requests to the ECS backend.
 
-const { URL } = require('url');
-const fetch = require('node-fetch'); // Ensure node-fetch is installed in your frontend project's dependencies
+import fetch from 'node-fetch';
 
-// Replace with your actual ECS backend URL
-const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL || 'http://121.199.34.78:3001';
+export default async function (req, res) {
+  // 从 Vercel 环境变量中获取后端 URL，如果未设置则使用默认值
+  const ECS_BACKEND_URL = process.env.ECS_BACKEND_URL || 'http://121.199.34.78:3001';
 
-export default async function handler(req, res) {
-  const { pathname, searchParams } = new URL(req.url, `http://${req.headers.host}`);
+  // 确保请求方法是 POST
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method Not Allowed' });
+  }
 
-  // Construct the target URL for the backend
-  // We are proxying paths under /api/auth to the backend's /auth path
-  const backendPath = pathname.replace(/^\/api/, ''); // Remove /api prefix
-  const targetUrl = `${BACKEND_BASE_URL}${backendPath}${searchParams.toString() ? '?' + searchParams.toString() : ''}`;
-
-  console.log(`Proxying request from ${req.method} ${req.url} to ${targetUrl}`);
+  // Vercel 会自动解析请求路径，例如 /api/auth/login 或 /api/auth/register
+  const targetPath = req.url; 
 
   try {
-    // Forward the request to the backend
-    const backendResponse = await fetch(targetUrl, {
-      method: req.method,
+    // 将请求转发到你的 ECS 后端
+    const response = await fetch(`${ECS_BACKEND_URL}${targetPath}`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // You might need to forward other headers like Authorization if applicable
-        // ...req.headers, // Be cautious with forwarding all headers
+        // 可以根据需要转发其他请求头，例如 Authorization
+        // ...req.headers, 
       },
-      body: req.method !== 'GET' && req.method !== 'HEAD' ? req.body : undefined,
+      body: JSON.stringify(req.body), // Vercel 会自动解析 JSON 请求体到 req.body
     });
 
-    // Set the status code and headers from the backend response
-    res.status(backendResponse.status);
-    backendResponse.headers.forEach((value, name) => {
-      // Avoid setting forbidden headers like Content-Encoding that Vercel handles
-      if (!['content-encoding', 'content-length', 'transfer-encoding'].includes(name.toLowerCase())) {
-         res.setHeader(name, value);
-      }
-    });
+    const data = await response.json();
 
-    // Send the backend response body back to the frontend
-    const backendResponseBody = await backendResponse.text(); // Use .text() or .json() based on expected response type
-    res.send(backendResponseBody);
+    // 将后端响应的状态码和数据返回给前端
+    res.status(response.status).json(data);
 
   } catch (error) {
-    console.error('Proxy Error:', error);
-    res.status(500).json({ message: 'Internal Server Error proxying request', error: error.message });
+    console.error('Error proxying auth request to ECS backend:', error);
+    res.status(500).json({ message: 'AI服务返回了无效的响应' }); // 使用与 Coze AI 相同的错误信息
   }
 }
