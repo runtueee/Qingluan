@@ -1,7 +1,7 @@
 // This Vercel Serverless Function acts as a proxy for authentication requests to the ECS backend.
 
 import fetch from 'node-fetch';
-const { URL } = require('url');
+import { URL } from 'url';
 
 // Replace with your actual ECS backend URL
 const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL || 'http://121.199.34.78:3001';
