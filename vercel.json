@@ -1,4 +1,12 @@
 {
+  "functions": {
+    "api/coze-chat.js": {
+      "runtime": "nodejs22.x"
+    },
+    "api/auth/[...path].js": {
+      "runtime": "nodejs22.x"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/:path*",
