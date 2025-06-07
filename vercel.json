@@ -1,10 +1,10 @@
 {
   "functions": {
     "api/coze-chat.js": {
-      "runtime": "@vercel/node@22.x"
+      "runtime": "nodejs22.x"
     },
     "api/auth/[...path].js": {
-      "runtime": "@vercel/node@22.x"
+      "runtime": "nodejs22.x"
     }
   },
   "rewrites": [
