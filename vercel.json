@@ -1,20 +1,18 @@
 {
-  "functions": {
-    "api/coze-chat.js": {
-      "runtime": "@vercel/node@18.x"
-    },
-    "api/auth/[...path].js": {
-      "runtime": "@vercel/node@18.x"
-    }
-  },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
+      "src": "/api/auth/(.*)",
+      "dest": "/api/auth/[...path].js",
+      "methods": ["GET", "POST"]
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/api/coze-chat",
+      "dest": "/api/coze-chat.js",
+      "methods": ["GET", "POST"]
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
